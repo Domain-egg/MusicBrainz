@@ -1,23 +1,20 @@
 import React, {useState} from "react";
-import {StyleSheet, Text, ScrollView, TouchableHighlight, TextInput, View, FlatList, SafeAreaView, Image} from "react-native";
+import {StyleSheet, Text, TouchableHighlight, TextInput, View, FlatList, SafeAreaView, Image} from "react-native";
 import {Icon} from 'react-native-elements'
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import navigationContainer from "@react-navigation/native/src/NavigationContainer";
+
 
 const colors = [
         '#1C3144',
         '#D00000',
         '#FFBA08',
-    '#A2AEBB',
-    '#3F88C5'
+        '#A2AEBB',
+        '#3F88C5'
     ];
 
 var colorIndex = 0;
 
 export default function HomeScreen({navigation}) {
     const [searchTerm, setSearchTerm] = useState('')
-
     const [dataSource, setDataSource] = React.useState({});
 
     function search(string){
@@ -35,7 +32,10 @@ export default function HomeScreen({navigation}) {
 
     return (
         <SafeAreaView style={styles.body}>
-            <View style={StyleSheet.compose(styles.logo, {height: searchTerm.length <= 0?'40%':'0%'})}><Image style={{width: searchTerm.length <= 0? 200 :0 , height:200}} source={{uri: 'https://cdn.pixabay.com/photo/2020/09/25/02/56/music-5600363_960_720.png'}}></Image></View>
+            <View style={StyleSheet.compose(styles.logo, {height: searchTerm.length <= 0?'40%':'0%'})}>
+                <Image style={{width: searchTerm.length <= 0? 200 :0 , height:200}} source={{uri: 'https://cdn.pixabay.com/photo/2020/09/25/02/56/music-5600363_960_720.png'}}>
+                </Image>
+            </View>
             <View style={styles.row}>
                 <TextInput style={styles.search} clearButtonMode='while-editing' placeholderTextColor='#000' placeholder='Search' onChangeText={value => search(value)}/>
                 <TouchableHighlight><Icon
@@ -43,7 +43,7 @@ export default function HomeScreen({navigation}) {
                     name='heart'
                     type='font-awesome'
                     color='#f50'
-                    onPress={() => console.log('hello')}/></TouchableHighlight>
+                    onPress={()=>navigation.navigate('Favorites')}/></TouchableHighlight>
             </View>
             <View style={styles.container}>
                 <FlatList
@@ -59,8 +59,6 @@ export default function HomeScreen({navigation}) {
                             <Text style={styles.itemName}>{item.name}</Text>
                         </TouchableHighlight>
                     )}
-                    /*numColumns={2}
-                    keyExtractor={(item, index) => index}*/
                 />
             </View>
             <View style={StyleSheet.compose(styles.row, styles.creditView)}>

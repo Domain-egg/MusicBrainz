@@ -2,39 +2,33 @@ import React, {useState} from "react";
 import {
     StyleSheet,
     Text,
-    ScrollView,
-    TouchableHighlight,
-    TextInput,
     View,
     FlatList,
     SafeAreaView,
-    Image,
-    ImageBackground
 } from "react-native";
 import {Icon} from 'react-native-elements'
-import Album from "../components/Album";
+import AlbumComponent from "../components/AlbumComponent";
 
 
 
-export default function Artist({route}) {
+export default function Artist({route, navigation}) {
 
     const {
         mbid,
-        name
     } = route.params
 
     const [dataSource, setDataSource] = React.useState({});
     const [imageUrl, setImageUrl] = React.useState([]);
 
     React.useEffect(()=>{
-        let url = 'https://musicbrainz.org/ws/2/release?artist='+ mbid +'&fmt=json'
+        let url = 'https://musicbrainz.org/ws/2/release-group?artist='+ mbid +'&fmt=json'
         fetch(url, {headers: {
                 'User-Agent':'MusicBrainzTest/0.0.1 (alex.domanegg@outlook.com)'
             }
         })
             .then(response => response.json())
             .then((data)=>{
-                setDataSource(data.releases);
+                setDataSource(data["release-groups"]);
             }).catch((error) => console.log(error))
     }, []);
 
@@ -47,7 +41,9 @@ export default function Artist({route}) {
                     data={dataSource}
                     keyExtractor={(item, index) => index}
                     renderItem={({ item, index }) => (
-                        <Album title = {item.title} uri = {imageUrl[index]} mbid={item.id} />
+                        <AlbumComponent title = {item.title} uri = {imageUrl[index]} mbid={item.id} onPress={()=>navigation.navigate('Album',{
+                            dataSource: item,
+                        })}/>
                     )}
                     numColumns={2}
 
