@@ -24,14 +24,14 @@ export default function App(){
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false,}}></Stack.Screen>
-                <Stack.Screen name="Artist" component={Artist} options={({ route }) => ({ title: route.params.name, headerStyle: {
-                        backgroundColor: 'rgb(18,18,18)',
-                    }, headerTintColor: '#fff',
-                }) }></Stack.Screen>
+                <Stack.Screen name="Artist" options={{ title: '', headerStyle: { backgroundColor: '#121212',}, headerTintColor: '#fff',
+                }}>
+                    {props => <Artist {...props} GlobalState={GlobalState}/>}
+                </Stack.Screen>
                 <Stack.Screen
                     name="Album"
                     options={{title: '', headerStyle:{backgroundColor: '#121212'}, headerTintColor:'#fff'} }>
-                    {props => <Album {...props} GlobalState={GlobalState}/>}
+                    {props => <Album {...props} />}
                 </Stack.Screen>
                 <Stack.Screen
                     name="Favorites"
