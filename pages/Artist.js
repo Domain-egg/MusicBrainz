@@ -1,16 +1,14 @@
-import React, {useState} from "react";
+import React from "react";
 import {
     StyleSheet,
-    Text,
     View,
     FlatList,
     SafeAreaView,
 } from "react-native";
-import {Icon} from 'react-native-elements'
 import AlbumComponent from "../components/AlbumComponent";
 
 
-
+//Screen that shows all Releases of the selected Artist
 export default function Artist({route, navigation}) {
 
     const {
@@ -18,10 +16,10 @@ export default function Artist({route, navigation}) {
     } = route.params
 
     const [dataSource, setDataSource] = React.useState({});
-    const [imageUrl, setImageUrl] = React.useState([]);
 
     React.useEffect(()=>{
         let url = 'https://musicbrainz.org/ws/2/release-group?artist='+ mbid +'&fmt=json'
+        //fetch the releases of the selected artist fromm the API
         fetch(url, {headers: {
                 'User-Agent':'MusicBrainzTest/0.0.1 (alex.domanegg@outlook.com)'
             }
@@ -36,17 +34,16 @@ export default function Artist({route, navigation}) {
     return(
         <SafeAreaView style={styles.body}>
             <View style={styles.container}>
-
+                {/*create a list of the releases with 2 Columns*/}
                 <FlatList
                     data={dataSource}
                     keyExtractor={(item, index) => index}
-                    renderItem={({ item, index }) => (
-                        <AlbumComponent title = {item.title} uri = {imageUrl[index]} mbid={item.id} onPress={()=>navigation.navigate('Album',{
+                    renderItem={({ item }) => (
+                        <AlbumComponent title = {item.title} mbid={item.id} onPress={()=>navigation.navigate('Album',{
                             dataSource: item,
                         })}/>
                     )}
                     numColumns={2}
-
                 />
             </View>
         </SafeAreaView>

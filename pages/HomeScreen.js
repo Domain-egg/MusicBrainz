@@ -11,12 +11,13 @@ const colors = [
         '#3F88C5'
     ];
 
-var colorIndex = 0;
+let colorIndex = 0;
 
 export default function HomeScreen({navigation}) {
     const [searchTerm, setSearchTerm] = useState('')
     const [dataSource, setDataSource] = React.useState({});
 
+    //Gets Results of the API and saves them
     function search(string){
         setSearchTerm(string);
         let url = 'https://musicbrainz.org/ws/2/artist?query=\''+ string +'\'&limit=20&fmt=json'
@@ -32,11 +33,13 @@ export default function HomeScreen({navigation}) {
 
     return (
         <SafeAreaView style={styles.body}>
+            {/*View and Image change Size when SearchTerm gets inserted*/}
             <View style={StyleSheet.compose(styles.logo, {height: searchTerm.length <= 0?'40%':'0%'})}>
                 <Image style={{width: searchTerm.length <= 0? 200 :0 , height:200}} source={{uri: 'https://cdn.pixabay.com/photo/2020/09/25/02/56/music-5600363_960_720.png'}}>
                 </Image>
             </View>
             <View style={styles.row}>
+                {/*TextInput calls search() on any change of the Input*/}
                 <TextInput style={styles.search} clearButtonMode='while-editing' placeholderTextColor='#000' placeholder='Search' onChangeText={value => search(value)}/>
                 <TouchableHighlight><Icon
                     raised
@@ -45,11 +48,13 @@ export default function HomeScreen({navigation}) {
                     color='#f50'
                     onPress={()=>navigation.navigate('Favorites')}/></TouchableHighlight>
             </View>
+            {/*Shows a list of the search Results*/}
             <View style={styles.container}>
                 <FlatList
                     data={dataSource}
                     renderItem={({ item }) => (
                         <TouchableHighlight
+                            /*assigns a color to the Artist*/
                             style={StyleSheet.compose(styles.item, {backgroundColor:colors.at(colorIndex++%colors.length)})}
                             onPress={()=> navigation.navigate('Artist',{
                                 mbid: item.id,

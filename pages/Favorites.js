@@ -15,11 +15,12 @@ export default function Favorites({GlobalState, navigation}) {
     return(
         <SafeAreaView style={styles.body}>
             <View style={styles.container}>
+                {/*Show a list with the favorite Albums from the GlobalState*/}
                 <FlatList
                     data={GlobalState.favorites}
                     keyExtractor={(item, index) => index}
                     renderItem={({ item, index }) => (
-                        <AlbumComponent title = {item.title} uri = {GlobalState.favoritesImg[index]} mbid={item.id} onPress={()=>navigation.navigate('Album',{
+                        <AlbumComponent title = {item.title}  mbid={item.id} onPress={()=>navigation.navigate('Album',{
                             dataSource: item,
                         })}/>
                     )}

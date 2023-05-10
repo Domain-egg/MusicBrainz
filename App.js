@@ -14,11 +14,10 @@ export default function App(){
 
     //creating the States to save favorites, favorites contains an Array of Albums as JSON
     const [favorites, setFavorites] = useState([]);
-    const [favoritesImg, setFavoritesImg] = useState([]);
+
 
     const GlobalState = {
         favorites, setFavorites,
-        favoritesImg, setFavoritesImg,
     }
 
     return(
