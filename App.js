@@ -7,17 +7,20 @@ import HomeScreen from './pages/HomeScreen';
 import Artist from "./pages/Artist";
 import Album from "./pages/Album";
 import Favorites from "./pages/Favorites";
+import 'react-native-gesture-handler';
 
 const Stack = createNativeStackNavigator()
 
 export default function App(){
 
     //creating the States to save favorites, favorites contains an Array of Albums as JSON
-    const [favorites, setFavorites] = useState([]);
-
+    const [favoritesId, setFavoritesId] = useState([]);
+    const [favoritesName, setFavoritesName] = useState([]);
 
     const GlobalState = {
-        favorites, setFavorites,
+        favoritesId, setFavoritesId,
+        favoritesName, setFavoritesName
+
     }
 
     return(
@@ -30,7 +33,7 @@ export default function App(){
                 </Stack.Screen>
                 <Stack.Screen
                     name="Album"
-                    options={{title: '', headerStyle:{backgroundColor: '#121212'}, headerTintColor:'#fff'} }>
+                    options={{title: '', headerStyle:{backgroundColor: '#121212'}, headerTintColor:'#ffd'} }>
                     {props => <Album {...props} />}
                 </Stack.Screen>
                 <Stack.Screen

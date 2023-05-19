@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {StyleSheet, Text, TouchableHighlight, TextInput, View, FlatList, SafeAreaView, Image} from "react-native";
+import {StyleSheet, Text, TouchableHighlight, TextInput, View, FlatList, Image} from "react-native";
 import {Icon} from 'react-native-elements'
 
 
@@ -32,7 +32,7 @@ export default function HomeScreen({navigation}) {
     }
 
     return (
-        <SafeAreaView style={styles.body}>
+        <View style={styles.body}>
             {/*View and Image change Size when SearchTerm gets inserted*/}
             <View style={StyleSheet.compose(styles.logo, {height: searchTerm.length <= 0?'40%':'0%'})}>
                 <Image style={{width: searchTerm.length <= 0? 200 :0 , height:200}} source={{uri: 'https://cdn.pixabay.com/photo/2020/09/25/02/56/music-5600363_960_720.png'}}>
@@ -69,7 +69,7 @@ export default function HomeScreen({navigation}) {
             <View style={StyleSheet.compose(styles.row, styles.creditView)}>
                 <Text style={styles.credits}>Alex Domanegg 12133780</Text>
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 

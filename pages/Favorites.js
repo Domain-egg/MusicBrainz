@@ -3,7 +3,7 @@ import {
     StyleSheet,
     View,
     FlatList,
-    SafeAreaView, Text, TouchableHighlight,
+    Text, TouchableHighlight,
 } from "react-native";
 
 
@@ -21,25 +21,27 @@ export default function Favorites({GlobalState, navigation}) {
 
     let colorIndex = 0;
 
+    console.log(GlobalState.favoritesId)
+
     return (
-        <SafeAreaView style={styles.body}>
+        <View style={styles.body}>
             <View style={styles.container}>
                 {/*Show a list with the favorite Artists from the GlobalState*/}
                 <FlatList
-                    data={GlobalState.favorites}
+                    data={GlobalState.favoritesId}
                     keyExtractor={(item, index) => index}
-                    renderItem={({item}) => (
+                    renderItem={({item, index}) => (
 
                         <TouchableHighlight
                             /*assigns a color to the Artist*/
                             style={styles.artist}
                             onPress={() => navigation.navigate('Artist', {
-                                mbid: item['mbid'],
-                                name: item['name'],
+                                mbid: item,
+                                name: GlobalState.favoritesName.at(index),
                             })}
                         >
                             <View style= {StyleSheet.compose(styles.background, {backgroundColor: colors.at(colorIndex++ % colors.length)})} >
-                                <Text style={styles.title}>{item['name']}</Text>
+                                <Text style={styles.title}>{GlobalState.favoritesName.at(index)}</Text>
                             </View>
                         </TouchableHighlight>
 
@@ -47,7 +49,7 @@ export default function Favorites({GlobalState, navigation}) {
                     numColumns={2}
                 />
             </View>
-        </SafeAreaView>
+        </View>
     )
 
 }

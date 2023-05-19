@@ -3,11 +3,9 @@ import {
     StyleSheet,
     Text,
     View,
-    SafeAreaView,
     Image,
-    TouchableHighlight,
 } from "react-native";
-import {Icon} from 'react-native-elements'
+
 
 
 export default function Album({GlobalState, route}) {
@@ -35,7 +33,7 @@ export default function Album({GlobalState, route}) {
 
 
     return(
-        <SafeAreaView style={styles.body}>
+        <View style={styles.body}>
             <View style={styles.container}>
                 <Text style={styles.title}>{dataSource.title}</Text>
                 <Image style={styles.image} source={{uri: uri}}></Image>
@@ -50,7 +48,7 @@ export default function Album({GlobalState, route}) {
                     </View>
                 </View>
             </View>
-        </SafeAreaView>
+        </View>
     )
 
 }

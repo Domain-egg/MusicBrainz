@@ -3,7 +3,7 @@ import {
     StyleSheet,
     View,
     FlatList,
-    SafeAreaView, Text, TouchableHighlight,
+    Text, TouchableHighlight,
 
 } from "react-native";
 import AlbumComponent from "../components/AlbumComponent";
@@ -13,7 +13,7 @@ import {Icon} from "react-native-elements";
 //Screen that shows all Releases of the selected Artist
 export default function Artist({route, navigation, GlobalState}) {
 
-    //a state to save if this Album is a favorite, so if changed the screen renders
+    //a state to save if this Artist is a favorite, so if changed the screen renders
     const [favorite, setFavorite] = useState(false)
 
     const {
@@ -35,12 +35,12 @@ export default function Artist({route, navigation, GlobalState}) {
                 setDataSource(data["release-groups"]);
             }).catch((error) => console.log(error))
         //searching inside zhe GlobalState to check if Album is set as favorite
-        setFavorite(GlobalState.favorites.includes(route['params']))
+        setFavorite(GlobalState.favoritesId.includes(mbid))
     }, []);
 
 
     return(
-        <SafeAreaView style={styles.body}>
+        <View style={styles.body}>
             <View style={styles.row}>
                 <Text style={styles.title}>{name}</Text>
                 <TouchableHighlight>
@@ -50,21 +50,26 @@ export default function Artist({route, navigation, GlobalState}) {
                         type='font-awesome'
                         color= {favorite?'#f50':'#b7b7b7'}
                         onPress={() => {
-                            let buffer = GlobalState.favorites;
-                            if(buffer.includes(dataSource)) {
+                            let bufferId = GlobalState.favoritesId;
+                            let bufferName = GlobalState.favoritesName;
+                            if(bufferId.includes(mbid)) {
                                 setFavorite(false);
                                 //had a bug where splice can't get rid of the first element in the array
                                 //because of this here a separation, that in the case a shift() gets called
-                                if(buffer.indexOf(route['params'])===0) {
-                                    buffer.shift()
+                                if(bufferId.indexOf(mbid)===0) {
+                                    bufferId.shift()
+                                    bufferName.shift()
                                 }else{
-                                    buffer.splice(buffer.indexOf(route['params']),buffer.indexOf(route['params']))
+                                    bufferId.splice(bufferId.indexOf(mbid),bufferId.indexOf(mbid))
+                                    bufferName.splice(bufferId.indexOf(mbid),bufferId.indexOf(mbid))
                                 }
                             }else {
                                 setFavorite(true);
-                                buffer.push(route['params'])
+                                bufferId.push(mbid)
+                                bufferName.push(name)
                             }
-                            GlobalState.setFavorites(buffer);
+                            GlobalState.setFavoritesId(bufferId);
+                            GlobalState.setFavoritesName(bufferName);
                         }}>
                     </Icon>
                 </TouchableHighlight>
@@ -82,7 +87,7 @@ export default function Artist({route, navigation, GlobalState}) {
                     numColumns={2}
                 />
             </View>
-        </SafeAreaView>
+        </View>
     )
 
 }
